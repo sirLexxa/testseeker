@@ -321,8 +321,8 @@ async function seek(dni) {
         Estado: SeekerData.familia.length > 0,
         data: SeekerData.familia,
       },
-      "Dev": "https://t.me/https://t.me/Prxpietario",
-      timeWait: tiempoConsulta + " ms", // Agregar el tiempo de consulta al objeto
+      "Dev": "https://t.me/Prxpietario",
+      timeWait: tiempoConsulta + " ms",
     };
 
     // Comprobar si hay arrays vacíos y establecer el estatus correspondiente
