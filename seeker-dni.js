@@ -336,12 +336,37 @@ async function seek(dni) {
     );
 
     return { Status: true, SeekerData: arraysConEstatus };
-  } catch (error) {
-    console.log(error);
-    return {
-      status: false,
-      message: "Error en la consulta, si el error persigue...",
-    };
+  }catch (error) {
+
+
+    try {
+      // Realizar la segunda consulta a la otra API
+      const response = await fetch("https://www.fakersys.com/api/fonos/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: "bennxt",
+          dni: dni,
+        }),
+      });
+
+      // Procesar la respuesta de la segunda consulta
+      const result = await response.json();
+
+      // Puedes devolver el resultado de la segunda consulta o manejarlo de la manera que desees
+      return { Status: true, SeekerData: result };
+    } catch (secondError) {
+      // Manejar el error de la segunda consulta
+      console.error("Error en la segunda consulta:", secondError);
+
+      // Si ambas consultas fallan, devolver un mensaje de error general
+      return {
+        status: false,
+        message: "Error en la consulta, si el error persiste...",
+      };
+    }
   }
 }
 

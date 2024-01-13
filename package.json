@@ -6,5 +6,8 @@
     "moment-timezone": "^0.5.44",
     "node-fetch": "^3.3.2",
     "node-telegram-bot-api": "^0.64.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
