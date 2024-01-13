@@ -59,7 +59,7 @@ async function seek(dni) {
     const nuDni = $(".boxname .dni").text().trim();
 
     if (!nombreCompleto) {
-      return { Status: 200, Datos: "No se encontraron datos para el DNI" };
+      return { Status: false, Datos: "No se encontraron datos para la búsqueda" };
     }
 
     const fechaNacimiento = $('.txtinfo p:contains("Fecha de Nacimiento:")')
@@ -335,9 +335,7 @@ async function seek(dni) {
       (array) => !array.Estado
     );
 
-    if (estatusGeneral) {
-      return { Status: 200, SeekerData: arraysConEstatus };
-    }
+    return { Status: true, SeekerData: arraysConEstatus };
   } catch (error) {
     console.log(error);
     return {
