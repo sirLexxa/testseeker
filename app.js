@@ -1,12 +1,12 @@
 const express = require("express");
 const { seek } = require("./seeker-dni.js");
+const moment = require("moment-timezone");
 
 const app = express();
-const PORT = 3000; // Puedes cambiar el puerto según tus necesidades
+const PORT = 3000;
 
 app.use(express.json());
 
-// Array para almacenar información de consultas
 const consultaLogs = [];
 
 app.get("/api/seek", async (req, res) => {
@@ -21,13 +21,19 @@ app.get("/api/seek", async (req, res) => {
   }
 
   try {
+    const startTime = new Date();
     const result = await seek(dni);
+    const endTime = new Date();
+    const tiempoConsulta = endTime - startTime;
 
-    // Registrar la consulta en el array
+    // Obtener la hora actual en el huso horario de Perú y formatearla
+    const timestampPeru = moment().tz("America/Lima").format("DD/MM/YYYY - HH:mm:ss");
+
     consultaLogs.push({
       ip: clientIp,
       dni,
-      timestamp: new Date().toISOString(),
+      timestamp: timestampPeru,
+      tiempoConsulta: `${tiempoConsulta} ms`,
     });
 
     res.json(result);
@@ -37,7 +43,6 @@ app.get("/api/seek", async (req, res) => {
   }
 });
 
-// Nueva ruta para obtener todos los logs de consultas
 app.get("/api/logs", (req, res) => {
   res.json(consultaLogs);
 });
