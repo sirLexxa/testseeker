@@ -58,6 +58,10 @@ async function seek(dni) {
     const nombreCompleto = $(".boxname .name").text().trim();
     const nuDni = $(".boxname .dni").text().trim();
 
+    if (!nombreCompleto) {
+      return { Status: 200, Datos: "No se encontraron datos para el DNI" };
+    }
+
     const fechaNacimiento = $('.txtinfo p:contains("Fecha de Nacimiento:")')
       .contents() // Obtener todos los nodos hijos, incluidos los nodos de texto
       .filter(function () {
@@ -321,8 +325,9 @@ async function seek(dni) {
         Estado: SeekerData.familia.length > 0,
         data: SeekerData.familia,
       },
-      "Dev": "https://t.me/Prxpietario",
+      Dev: "https://t.me/Prxpietario",
       timeWait: tiempoConsulta + " ms",
+      Message: "La prueba gratuita finaliza el 19/01/2024",
     };
 
     // Comprobar si hay arrays vacíos y establecer el estatus correspondiente
@@ -330,7 +335,9 @@ async function seek(dni) {
       (array) => !array.Estado
     );
 
-    return { SeekerData: arraysConEstatus };
+    if (estatusGeneral) {
+      return { Status: 200, SeekerData: arraysConEstatus };
+    }
   } catch (error) {
     console.log(error);
     return {
